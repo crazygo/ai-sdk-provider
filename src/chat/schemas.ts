@@ -41,6 +41,7 @@ export const OpenRouterNonStreamChatCompletionResponseSchema =
           role: z.literal('assistant'),
           content: z.string().nullable().optional(),
           reasoning: z.string().nullable().optional(),
+          reasoning_content: z.string().nullable().optional(),
           reasoning_details: ReasoningDetailArraySchema.nullish(),
           images: ImageResponseArraySchema.nullish(),
 
@@ -107,6 +108,7 @@ export const OpenRouterStreamChatCompletionChunkSchema = z.union([
             role: z.enum(['assistant']).optional(),
             content: z.string().nullish(),
             reasoning: z.string().nullish().optional(),
+            reasoning_content: z.string().nullish().optional(),
             reasoning_details: ReasoningDetailArraySchema.nullish(),
             images: ImageResponseArraySchema.nullish(),
             tool_calls: z

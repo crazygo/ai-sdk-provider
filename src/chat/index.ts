@@ -294,14 +294,21 @@ export class OpenRouterChatLanguageModel implements LanguageModelV2 {
               return null;
             })
             .filter((p) => p !== null)
-        : choice.message.reasoning
+        : choice.message.reasoning_content
           ? [
               {
                 type: 'reasoning' as const,
-                text: choice.message.reasoning,
+                text: choice.message.reasoning_content,
               },
             ]
-          : [];
+          : choice.message.reasoning
+            ? [
+                {
+                  type: 'reasoning' as const,
+                  text: choice.message.reasoning,
+                },
+              ]
+            : [];
 
     const content: Array<LanguageModelV2Content> = [];
 
@@ -605,6 +612,8 @@ export class OpenRouterChatLanguageModel implements LanguageModelV2 {
               }
             } else if (delta.reasoning) {
               emitReasoningChunk(delta.reasoning);
+            } else if (delta.reasoning_content) {
+              emitReasoningChunk(delta.reasoning_content);
             }
 
             if (delta.content) {
